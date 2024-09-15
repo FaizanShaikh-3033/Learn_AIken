@@ -23,3 +23,11 @@ fn explicit_sub (x,y){
 test explicit_sub_test (){
     explicit_sub(7,1) == -2
 }
+
+fn derivate (x,y)-> Int{
+    x%y
+}
+
+test derivate_test(){
+    derivate(10,5) == 0
+}
