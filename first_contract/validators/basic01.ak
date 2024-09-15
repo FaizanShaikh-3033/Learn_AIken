@@ -5,7 +5,7 @@ fn main() {
     x + y +z
 }
 
-fn sum (x ,y){
+fn sum (x ,y)-> Int{
     x+y
 }
 
@@ -23,5 +23,5 @@ test sum_test(){
 
 //we are failing this by not putting the expected value , (5-3=2, we put 21, so it failing)
 test sub_test(){
-    sub(5,3) == 21
+    sub(5,3) == 2
 }
