@@ -9,6 +9,10 @@ validator alwaysSucceeds {
   ) {
     True
   }
+
+  else(_) {
+    fail
+  }
 }
 
 test tes_always_successful() {
