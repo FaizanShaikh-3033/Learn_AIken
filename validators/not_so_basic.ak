@@ -102,12 +102,6 @@ test checkX_test_1(){
   checkX(dataName) == 1
 }
 
-
-// fn sorted1(x, f: fn(x) -> x) {
-//   x
-//     |> sort
-//     |> tail
-// }
 fn max_num(list: List<Int>, max: Int) -> Int {
   let i = option.or_else(list.head(list), 0)
   if list == [] {
@@ -125,10 +119,84 @@ fn max_num_n(list: List<Int>) -> Option<Int> {
   list.at(list.sort(list, int.compare), len - 1)
 }
 
+fn max_num_when(list: List<Int>, max: Int) -> Int {
+  let i =
+    when list.head(list) is {
+      Some(a) -> a
+      None -> 0
+    }
+  if list == [] {
+    0
+  } else if i >= max {
+    let max = i
+    max_num(list.drop(list, 1), max)
+  } else {
+    max
+  }
+}
+
+test max_wehn_test() {
+  max_num_when([2, 4, 6, 7, 8, 9, 3, 2], 0) == 9
+}
+
+
 test max_test() {
   max_num([2, 4, 6, 7, 8, 9, 3, 2], 0) == 9
 }
 
 test maxn_test() {
   max_num_n([2, 4, 6, 7, 8, 9, 3, 2]) == Some(9)
+}
+
+
+type Person{
+  name:ByteArray,
+  age:Int,
+  ismale:Bool
+}
+
+type Person2 {
+  Personinfo{
+  name:ByteArray,
+  age:Int,
+  ismale:Bool
+}
+  Address{
+    street:ByteArray,
+    country:ByteArray,
+    nationality:ByteArray
+  }
+}
+
+
+fn person1(person:Person)->ByteArray{
+  person.name
+}
+
+test person_test(){ 
+  person1(Person("Alive",21, True)) == "Alive"
+}
+
+fn whole_person(person:Person)-> Person{
+  Person(person.name,person.age,person.ismale)
+}
+
+test whole_person_test(){
+  whole_person(Person("Alice",20,False)) == Person("Alice",20,False)
+}
+
+
+type The_datum{
+  datum:Option<Int>
+}
+
+fn check_datum(dat:The_datum)->Bool{
+  when dat.datum is {
+    None -> False
+    Some(x) -> x>10
+  }
+}
+
+test check_datum_test(){
+  check_datum(The_datum{datum:Some(15)}) == True
 }
