@@ -1,6 +1,7 @@
 use aiken/collection/list
 use aiken/option
 use aiken/primitive/int
+use aiken/primitive/bytearray
 
 type FixedP =
   Pair<Int, Int>
@@ -199,4 +200,98 @@ fn check_datum(dat:The_datum)->Bool{
 
 test check_datum_test(){
   check_datum(The_datum{datum:Some(15)}) == True
+}
+// fn palindrome(input: ByteArray) -> Bool {
+//   let len = bytearray.length(input)
+//   if bytearray.length(input) <= 1 {
+//     True
+//   } else if bytearray.at(input, 0) == bytearray.at(input, len - 1) {
+//     palindrome(bytearray.slice(input, start: 1, end: len - 2))
+//   } else {
+//     False
+//   }
+// }
+
+// test palindrome_test() {
+//   palindrome("rahar") == True && palindrome("rahat") == False
+// }
+
+// fn count_vowels(x){
+//   let vowel = ["a","e","i","o","u"]
+//   if list.has(x,vowel){
+//   True}
+//   else{
+//     False
+//   }
+// }
+
+// test count_vowels_test(){
+//   count_vowels([["faizan"]]) == True
+// }
+
+// fn count_vowels1(x:ByteArray){
+//   let i =2
+//   let vovel = ["a","e","i","o","u"]
+//   let found = bytearray.take(x,i) 
+//   if list.has(vovel,found){
+//     True
+//   }else{
+//     False
+//   }
+// }
+
+// test count_vowels1_test(){
+//   count_vowels1("Faizan") == True
+// }
+// //else if bytearray.at(input, 0) == bytearray.at(input, len - 1) {
+// //     palindrome(bytearray.slice(input, start: 1, end: len - 2))
+// fn count_vowels2(x){
+//   let vovel = "aeiou"
+//   let len = bytearray.length(x)
+//   if bytearray.at(x,1) == bytearray.at(vovel,0){
+//     True
+//   }else{
+//     False
+//   }
+// }
+
+// test count_vowels2_test(){
+//   count_vowels2("faizan")== True
+//  }
+
+const vowels = "aeiouAEIOU"
+
+fn count_vowels3(x: ByteArray) -> Int {
+  bytearray.foldl(x, 0, fn (byte, acc) {
+    if bytearray.index_of(vowels, bytearray.from_int_big_endian(byte, 1)) != None {
+      acc + 1
+    } else {
+      acc
+    }
+  })
+}
+
+test count_vowels_test3() {
+  count_vowels3("faizan") == 3
+}
+
+fn count_vowel(string: ByteArray, n: Int) -> Int {
+  let vowel_list = "aeiouAEIOU"
+  when bytearray.is_empty(string) is {
+    True -> n
+    False ->
+      if bytearray.index_of(vowel_list, bytearray.take(string, 1)) == None {
+        count_vowel(bytearray.drop(string, 1), n)
+      } else {
+        count_vowel(bytearray.drop(string, 1), n + 1)
+      }
+  }
+}
+
+fn count_v(string: ByteArray) -> Int {
+  count_vowel(string, 0)
+}
+
+test count_vowel_check() {
+  count_v("faizan") == 3
 }
